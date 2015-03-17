@@ -1,5 +1,5 @@
 # skylines-scaleui
-ScaleUI mod for Cities: Skylines
+ScaleUI mod for Cities: Skylines (http://steamcommunity.com/sharedfiles/filedetails/?id=409338401)
 
 This mod adds buttons to scale / resize the complete user interface in Cities: Skylines.
 
