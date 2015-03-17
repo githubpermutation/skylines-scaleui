@@ -19,3 +19,8 @@ Please report any issues you find.
 
 ## Notice on building the project
 I set up MonoDevelop to automatically delete and copy the resulting .dll using Pre-/After-Build commands. It uses deldll.cmd to achieve, which will **delete** a file, so be careful. Additionally, the project references the assemblies on my local hard drive.
+
+## Attributions 
+
+Inspired by TextScaleMod (http://steamcommunity.com/sharedfiles/filedetails/?id=407225523) 
+Thanks to nlight for help with Reflection.
