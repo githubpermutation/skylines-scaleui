@@ -15,6 +15,8 @@ The scaling value is not saved permanently, only when you load a savegame while 
 
 If you use other mods which add UI elements, this mod will probably reposition them off-screen.
 
+The close buttons in a few tools might move to a different position.
+
 Please report any issues you find.
 
 ## Notice on building the project
@@ -22,5 +24,6 @@ I set up MonoDevelop to automatically delete and copy the resulting .dll using P
 
 ## Attributions 
 
-Inspired by TextScaleMod (http://steamcommunity.com/sharedfiles/filedetails/?id=407225523) 
+Inspired by TextScaleMod (http://steamcommunity.com/sharedfiles/filedetails/?id=407225523)
+
 Thanks to nlight for help with Reflection.
