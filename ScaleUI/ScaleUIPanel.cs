@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using ColossalFramework.UI;
 
@@ -7,6 +8,7 @@ namespace ScaleUI
 
 	public class ScaleUIPanel : UIPanel
 	{
+
 		UIButton increaseScaleButton;
 		UIButton decreaseScaleButton;
 		float thumbnailbarY = 0f;
@@ -95,7 +97,6 @@ namespace ScaleUI
 		{
 			UIView.GetAView ().scale += scalingfactor;
 			ResetUIPositions ();
-			
 		}
 		
 		private void DecreaseScale (UIComponent component, UIMouseEventParameter eventParam)
@@ -133,7 +134,26 @@ namespace ScaleUI
 			//container with info buttons
 			uic = UIView.GetAView ().FindUIComponent ("InfoViewsContainer");
 			uic.absolutePosition = new Vector3 (0, 58);
-			
+
+			//policiespanel
+			//much too big and can't be repositioned easily, need to reduce the size
+			PoliciesPanel policies = ToolsModifierControl.policiesPanel;
+
+			List<int> li = new List<int> ();
+			li.Add (DistrictPolicies.CITYPLANNING_POLICY_COUNT);
+			li.Add (DistrictPolicies.INDUSTRY_POLICY_COUNT);
+			li.Add (DistrictPolicies.SERVICE_POLICY_COUNT);
+			li.Add (DistrictPolicies.SPECIAL_POLICY_COUNT);
+			li.Add (DistrictPolicies.TAXATION_POLICY_COUNT);
+			li.Sort ();
+			li.Reverse ();
+			int maxPolicies = li [0];
+
+			UIButton b = (UIButton)policies.Find ("PolicyButton");
+			float buttonheight = b.height;
+
+			policies.component.height = maxPolicies * buttonheight + 200f;
+
 			//UnlockingPanel
 			//position at top of screen so it's visible with scaled ui
 			UnityEngine.Object obj = GameObject.FindObjectOfType (typeof(UnlockingPanel));

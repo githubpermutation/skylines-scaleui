@@ -1,17 +1,17 @@
 ﻿<Properties GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="README.md">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScaleUI\ScaleUIPanel.cs">
     <Files>
-      <File FileName="README.md" Line="1" Column="1" />
+      <File FileName="ScaleUI\ScaleUI.cs" Line="10" Column="29" />
+      <File FileName="ScaleUI\ScaleUIPanel.cs" Line="143" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Solution Items" expanded="True">
-            <Node name="C:\Users\Lars\Documents\skylines-scaleui\README.md" selected="True" />
-          </Node>
+          <Node name="Solution Items" expanded="True" />
           <Node name="ScaleUI" expanded="True">
             <Node name="References" expanded="True" />
+            <Node name="ScaleUIPanel.cs" selected="True" />
           </Node>
         </State>
       </Pad>
