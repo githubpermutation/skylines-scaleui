@@ -154,6 +154,7 @@ namespace ScaleUI
 
 			policies.component.height = maxPolicies * buttonheight + 200f;
 
+
 			//UnlockingPanel
 			//position at top of screen so it's visible with scaled ui
 			UnityEngine.Object obj = GameObject.FindObjectOfType (typeof(UnlockingPanel));
