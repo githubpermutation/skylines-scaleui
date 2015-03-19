@@ -5,7 +5,6 @@ using ColossalFramework.UI;
 
 namespace ScaleUI
 {
-
 	public class ScaleUIPanel : UIPanel
 	{
 
