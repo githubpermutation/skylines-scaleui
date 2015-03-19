@@ -63,6 +63,5 @@
   <ItemGroup>
     <None Include="ScaleUI.csproj" />
     <None Include="deldll.cmd" />
-    <None Include=".gitignore" />
   </ItemGroup>
 </Project>
