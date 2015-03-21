@@ -27,7 +27,5 @@ namespace ScaleUI
 			}
 			base.OnLevelUnloading ();
 		}
-
 	}
-	
 }
