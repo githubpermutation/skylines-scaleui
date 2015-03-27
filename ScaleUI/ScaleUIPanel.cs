@@ -16,8 +16,6 @@ namespace ScaleUI
 		public override void OnDestroy ()
 		{
 			UIInput.eventProcessKeyEvent -= new UIInput.ProcessKeyEventHandler (this.ProcessKeyEvent);
-			UnityEngine.Object.Destroy (decreaseScaleButton);
-			UnityEngine.Object.Destroy (increaseScaleButton);
 			base.OnDestroy ();
 		}
 
