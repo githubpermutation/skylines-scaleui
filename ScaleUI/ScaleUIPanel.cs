@@ -160,9 +160,6 @@ namespace ScaleUI
 			float newX = uic.relativePosition.x + uic.width / 2 - this.width / 2;
 			float newY = uic.relativePosition.y + uic.height + 10;
 			this.relativePosition = new Vector3 (newX, newY);
-
-			// not sure if necessary
-			UIView.GetAView ().Invalidate ();
 		}
 	}
 }
