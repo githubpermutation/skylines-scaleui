@@ -15,49 +15,8 @@ namespace ScaleUI
 		
 		public override void OnDestroy ()
 		{
-			UIInput.eventProcessKeyEvent -= new UIInput.ProcessKeyEventHandler (this.ProcessKeyEvent);
+			UIInput.eventProcessKeyEvent -= new UIInput.ProcessKeyEventHandler (this.processKeyEvent);
 			base.OnDestroy ();
-		}
-
-		private UIButton createButton ()
-		{
-			UIButton button = this.AddUIComponent (typeof(UIButton)) as UIButton;
-
-			button.horizontalAlignment = UIHorizontalAlignment.Center;
-			button.verticalAlignment = UIVerticalAlignment.Middle;
-			button.textHorizontalAlignment = UIHorizontalAlignment.Center;
-			button.textVerticalAlignment = UIVerticalAlignment.Middle;
-
-			button.autoSize = false;
-			button.textScale = 1.5f;
-			button.width = 46;
-			button.height = 46;
-
-			button.normalBgSprite = "OptionBase";
-			button.disabledBgSprite = "OptionBaseDisabled";
-			button.hoveredBgSprite = "OptionBaseHovered";
-			button.focusedBgSprite = "OptionBaseFocused";
-			button.pressedBgSprite = "OptionBasePressed";
-
-			button.textColor = new Color32 (255, 255, 255, 255);
-			button.disabledTextColor = new Color32 (7, 7, 7, 255);
-			button.hoveredTextColor = new Color32 (7, 132, 255, 255);
-			button.focusedTextColor = new Color32 (255, 255, 255, 255);
-			button.pressedTextColor = new Color32 (30, 30, 44, 255);
-
-			return button;
-		}
-
-		private void initPanel ()
-		{
-			this.backgroundSprite = "";
-			this.width = 300;
-			this.height = 300;
-
-			this.autoLayoutDirection = LayoutDirection.Vertical;
-			this.autoLayoutStart = LayoutStart.TopLeft;
-			this.autoLayoutPadding = new RectOffset (0, 0, 0, 0);
-			this.autoLayout = true;
 		}
 
 		public override void Start ()
@@ -66,43 +25,84 @@ namespace ScaleUI
 												
 			increaseScaleButton = createButton ();
 			increaseScaleButton.text = "+";						
-			increaseScaleButton.eventClick += IncreaseScale;						
+			increaseScaleButton.eventClick += increaseScale;						
 						
 			decreaseScaleButton = createButton();
 			decreaseScaleButton.text = "-";
-			decreaseScaleButton.eventClick += DecreaseScale;
+			decreaseScaleButton.eventClick += decreaseScale;
 						
-			UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (this.ProcessKeyEvent);
+			UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (this.processKeyEvent);
 												
-			ResetUIPositions ();						
+			fixUIPositions ();						
 		}
 
-		private void ProcessKeyEvent (EventType eventType, KeyCode keyCode, EventModifiers modifiers)
+		private void initPanel ()
+		{
+			this.backgroundSprite = "";
+			this.width = 300;
+			this.height = 300;
+			
+			this.autoLayoutDirection = LayoutDirection.Vertical;
+			this.autoLayoutStart = LayoutStart.TopLeft;
+			this.autoLayoutPadding = new RectOffset (0, 0, 0, 0);
+			this.autoLayout = true;
+		}
+		
+		private UIButton createButton ()
+		{
+			UIButton button = this.AddUIComponent (typeof(UIButton)) as UIButton;
+			
+			button.horizontalAlignment = UIHorizontalAlignment.Center;
+			button.verticalAlignment = UIVerticalAlignment.Middle;
+			button.textHorizontalAlignment = UIHorizontalAlignment.Center;
+			button.textVerticalAlignment = UIVerticalAlignment.Middle;
+			
+			button.autoSize = false;
+			button.textScale = 1.5f;
+			button.width = 46;
+			button.height = 46;
+			
+			button.normalBgSprite = "OptionBase";
+			button.disabledBgSprite = "OptionBaseDisabled";
+			button.hoveredBgSprite = "OptionBaseHovered";
+			button.focusedBgSprite = "OptionBaseFocused";
+			button.pressedBgSprite = "OptionBasePressed";
+			
+			button.textColor = new Color32 (255, 255, 255, 255);
+			button.disabledTextColor = new Color32 (7, 7, 7, 255);
+			button.hoveredTextColor = new Color32 (7, 132, 255, 255);
+			button.focusedTextColor = new Color32 (255, 255, 255, 255);
+			button.pressedTextColor = new Color32 (30, 30, 44, 255);
+			
+			return button;
+		}
+
+		private void processKeyEvent (EventType eventType, KeyCode keyCode, EventModifiers modifiers)
 		{
 			if (eventType == EventType.KeyDown && modifiers == EventModifiers.Control && (keyCode == KeyCode.Alpha0 || keyCode == KeyCode.Keypad0)) {
 				SetDefaultScale ();
 			}
 		}
 
-		private void IncreaseScale (UIComponent component, UIMouseEventParameter eventParam)
+		private void increaseScale (UIComponent component, UIMouseEventParameter eventParam)
 		{
 			UIView.GetAView ().scale += scalingfactor;
-			ResetUIPositions ();
+			fixUIPositions ();
 		}
 		
-		private void DecreaseScale (UIComponent component, UIMouseEventParameter eventParam)
+		private void decreaseScale (UIComponent component, UIMouseEventParameter eventParam)
 		{
 			UIView.GetAView ().scale = Math.Max (UIView.GetAView ().scale - scalingfactor, 1f);
-			ResetUIPositions ();
+			fixUIPositions ();
 		}
 		
 		private void SetDefaultScale ()
 		{
 			UIView.GetAView ().scale = 1f;
-			ResetUIPositions ();
+			fixUIPositions ();
 		}
 
-		private void ResetUIPositions ()
+		private void fixUIPositions ()
 		{			
 			fixFullScreenContainer();
 			fixInfoMenu();
