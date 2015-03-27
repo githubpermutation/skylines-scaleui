@@ -103,10 +103,20 @@ namespace ScaleUI
 		}
 
 		private void ResetUIPositions ()
+		{			
+			fixFullScreenContainer();
+			fixInfoMenu();
+			fixInfoViewsContainer ();
+			fixPoliciesPanel ();
+			fixUnlockingPanel();
+
+			fixScaleUIPanel ();
+		}
+
+		private void fixFullScreenContainer ()
 		{
-			UIComponent uic = null;
-			
 			//rescale the border around the window (when paused)
+			UIComponent uic;
 			uic = UIView.GetAView ().FindUIComponent ("ThumbnailBar");
 			if (thumbnailbarY == 0f) {
 				thumbnailbarY = uic.relativePosition.y;
@@ -117,16 +127,24 @@ namespace ScaleUI
 			uic = UIView.GetAView ().FindUIComponent ("FullScreenContainer");
 			uic.height += diffHeight;
 			uic.relativePosition = new Vector2 (0, 0);
-			
-			//button top left
-			uic = UIView.GetAView ().FindUIComponent ("InfoMenu");
-			uic.absolutePosition = new Vector3 (10, 10);
-						
-			//container with info buttons
-			uic = UIView.GetAView ().FindUIComponent ("InfoViewsContainer");
-			uic.absolutePosition = new Vector3 (0, 58);
+		}
 
-			//policiespanel
+		private void fixInfoMenu ()
+		{
+			//button top left
+			UIComponent uic = UIView.GetAView ().FindUIComponent ("InfoMenu");
+			uic.absolutePosition = new Vector3 (10, 10);
+		}
+
+		static void fixInfoViewsContainer ()
+		{
+			//container with info buttons
+			UIComponent uic = UIView.GetAView ().FindUIComponent ("InfoViewsContainer");
+			uic.absolutePosition = new Vector3 (0, 58);
+		}
+
+		private void fixPoliciesPanel ()
+		{
 			//much too big and can't be repositioned easily, need to reduce the size
 			PoliciesPanel policies = ToolsModifierControl.policiesPanel;
 
@@ -142,21 +160,25 @@ namespace ScaleUI
 
 			UIButton b = (UIButton)policies.Find ("PolicyButton");
 			float buttonheight = b.height;
-
 			policies.component.height = maxPolicies * buttonheight + 200f;
+		}
 
-
+		private void fixUnlockingPanel ()
+		{
 			//UnlockingPanel
 			//position at top of screen so it's visible with scaled ui
 			UnityEngine.Object obj = GameObject.FindObjectOfType (typeof(UnlockingPanel));
 			ReflectionUtils.WritePrivate<UnlockingPanel> (obj, "m_StartPosition", new UnityEngine.Vector3 (-1f, 1f));
-			
+		}
+
+		void fixScaleUIPanel ()
+		{
 			//make scaling panel as big as it needs to be
 			this.FitChildrenHorizontally ();
 			this.FitChildrenVertically ();
-		
+
 			//position the panel below the menu button top right
-			uic = UIView.GetAView ().FindUIComponent ("Esc");
+			UIComponent uic = UIView.GetAView ().FindUIComponent ("Esc");
 			float newX = uic.relativePosition.x + uic.width / 2 - this.width / 2;
 			float newY = uic.relativePosition.y + uic.height + 10;
 			this.relativePosition = new Vector3 (newX, newY);
