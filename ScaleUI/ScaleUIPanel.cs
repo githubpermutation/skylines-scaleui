@@ -7,7 +7,7 @@ namespace ScaleUI
 {
 	public class ScaleUIPanel : UIPanel
 	{
-
+		String modTag = "[ScaleUI]";
 		UIButton increaseScaleButton;
 		UIButton decreaseScaleButton;
 		float thumbnailbarY = 0f;
@@ -21,19 +21,26 @@ namespace ScaleUI
 
 		public override void Start ()
 		{
-			initPanel ();
-												
-			increaseScaleButton = createButton ();
-			increaseScaleButton.text = "+";						
-			increaseScaleButton.eventClick += increaseScale;						
-						
-			decreaseScaleButton = createButton();
-			decreaseScaleButton.text = "-";
-			decreaseScaleButton.eventClick += decreaseScale;
-						
-			UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (this.processKeyEvent);
-												
-			fixUIPositions ();						
+			try {
+				initPanel ();
+													
+				increaseScaleButton = createButton ();
+				increaseScaleButton.text = "+";						
+				increaseScaleButton.eventClick += increaseScale;						
+							
+				decreaseScaleButton = createButton ();
+				decreaseScaleButton.text = "-";
+				decreaseScaleButton.eventClick += decreaseScale;
+							
+				UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (this.processKeyEvent);
+
+				fixUIPositions ();	
+			} catch (Exception ex) {
+				String msg = modTag+" Could not initialize, aborting. Exception: "+ex.ToString();
+				DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, msg);
+			} finally {
+				UnityEngine.Object.Destroy(this.gameObject);
+			}
 		}
 
 		private void initPanel ()
@@ -104,13 +111,18 @@ namespace ScaleUI
 
 		private void fixUIPositions ()
 		{			
-			fixFullScreenContainer();
-			fixInfoMenu();
-			fixInfoViewsContainer ();
-			fixPoliciesPanel ();
-			fixUnlockingPanel();
-
-			fixScaleUIPanel ();
+			try {
+				fixFullScreenContainer ();
+				fixInfoMenu ();
+				fixInfoViewsContainer ();
+				fixPoliciesPanel ();
+				fixUnlockingPanel ();
+				
+				fixScaleUIPanel ();
+			} catch (Exception ex) {
+				String msg = modTag+" Could not move UI elements. Exception: "+ex.ToString();
+				DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, msg);
+			}
 		}
 
 		private void fixFullScreenContainer ()
