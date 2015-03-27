@@ -48,16 +48,21 @@ namespace ScaleUI
 			return button;
 		}
 
-		public override void Start ()
+		private void initPanel ()
 		{
 			this.backgroundSprite = "";
 			this.width = 300;
-			this.height = 300;						
-					
+			this.height = 300;
+
 			this.autoLayoutDirection = LayoutDirection.Vertical;
 			this.autoLayoutStart = LayoutStart.TopLeft;
 			this.autoLayoutPadding = new RectOffset (0, 0, 0, 0);
 			this.autoLayout = true;
+		}
+
+		public override void Start ()
+		{
+			initPanel ();
 												
 			increaseScaleButton = createButton ();
 			increaseScaleButton.text = "+";						
