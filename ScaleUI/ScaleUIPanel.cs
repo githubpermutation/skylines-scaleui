@@ -19,6 +19,35 @@ namespace ScaleUI
 			base.OnDestroy ();
 		}
 
+		private UIButton createButton ()
+		{
+			UIButton button = this.AddUIComponent (typeof(UIButton)) as UIButton;
+
+			button.horizontalAlignment = UIHorizontalAlignment.Center;
+			button.verticalAlignment = UIVerticalAlignment.Middle;
+			button.textHorizontalAlignment = UIHorizontalAlignment.Center;
+			button.textVerticalAlignment = UIVerticalAlignment.Middle;
+
+			button.autoSize = false;
+			button.textScale = 1.5f;
+			button.width = 46;
+			button.height = 46;
+
+			button.normalBgSprite = "OptionBase";
+			button.disabledBgSprite = "OptionBaseDisabled";
+			button.hoveredBgSprite = "OptionBaseHovered";
+			button.focusedBgSprite = "OptionBaseFocused";
+			button.pressedBgSprite = "OptionBasePressed";
+
+			button.textColor = new Color32 (255, 255, 255, 255);
+			button.disabledTextColor = new Color32 (7, 7, 7, 255);
+			button.hoveredTextColor = new Color32 (7, 132, 255, 255);
+			button.focusedTextColor = new Color32 (255, 255, 255, 255);
+			button.pressedTextColor = new Color32 (30, 30, 44, 255);
+
+			return button;
+		}
+
 		public override void Start ()
 		{
 			this.backgroundSprite = "";
@@ -30,52 +59,12 @@ namespace ScaleUI
 			this.autoLayoutPadding = new RectOffset (0, 0, 0, 0);
 			this.autoLayout = true;
 												
-			increaseScaleButton = this.AddUIComponent (typeof(UIButton)) as UIButton;
-			increaseScaleButton.text = "+";
-			increaseScaleButton.horizontalAlignment = UIHorizontalAlignment.Center;
-			increaseScaleButton.verticalAlignment = UIVerticalAlignment.Middle;
-			increaseScaleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-			increaseScaleButton.textVerticalAlignment = UIVerticalAlignment.Middle;
-			increaseScaleButton.autoSize = false;
-			increaseScaleButton.textScale = 1.5f;
-			increaseScaleButton.width = 46;
-			increaseScaleButton.height = 46;				
-						
-			increaseScaleButton.normalBgSprite = "OptionBase";
-			increaseScaleButton.disabledBgSprite = "OptionBaseDisabled";
-			increaseScaleButton.hoveredBgSprite = "OptionBaseHovered";
-			increaseScaleButton.focusedBgSprite = "OptionBaseFocused";
-			increaseScaleButton.pressedBgSprite = "OptionBasePressed";
-			increaseScaleButton.textColor = new Color32 (255, 255, 255, 255);
-			increaseScaleButton.disabledTextColor = new Color32 (7, 7, 7, 255);
-			increaseScaleButton.hoveredTextColor = new Color32 (7, 132, 255, 255);
-			increaseScaleButton.focusedTextColor = new Color32 (255, 255, 255, 255);
-			increaseScaleButton.pressedTextColor = new Color32 (30, 30, 44, 255);
-						
+			increaseScaleButton = createButton ();
+			increaseScaleButton.text = "+";						
 			increaseScaleButton.eventClick += IncreaseScale;						
 						
-			decreaseScaleButton = this.AddUIComponent (typeof(UIButton)) as UIButton;
+			decreaseScaleButton = createButton();
 			decreaseScaleButton.text = "-";
-			decreaseScaleButton.horizontalAlignment = UIHorizontalAlignment.Center;
-			decreaseScaleButton.verticalAlignment = UIVerticalAlignment.Middle;
-			decreaseScaleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-			decreaseScaleButton.textVerticalAlignment = UIVerticalAlignment.Middle;
-			decreaseScaleButton.autoSize = false;
-			decreaseScaleButton.textScale = 1.5f;
-			decreaseScaleButton.width = 46;
-			decreaseScaleButton.height = 46;
-						
-			decreaseScaleButton.normalBgSprite = "OptionBase";
-			decreaseScaleButton.disabledBgSprite = "OptionBaseDisabled";
-			decreaseScaleButton.hoveredBgSprite = "OptionBaseHovered";
-			decreaseScaleButton.focusedBgSprite = "OptionBaseFocused";
-			decreaseScaleButton.pressedBgSprite = "OptionBasePressed";
-			decreaseScaleButton.textColor = new Color32 (255, 255, 255, 255);
-			decreaseScaleButton.disabledTextColor = new Color32 (7, 7, 7, 255);
-			decreaseScaleButton.hoveredTextColor = new Color32 (7, 132, 255, 255);
-			decreaseScaleButton.focusedTextColor = new Color32 (255, 255, 255, 255);
-			decreaseScaleButton.pressedTextColor = new Color32 (30, 30, 44, 255);
-						
 			decreaseScaleButton.eventClick += DecreaseScale;
 						
 			UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (this.ProcessKeyEvent);
