@@ -7,7 +7,8 @@ namespace ScaleUI
 {
     public class ScaleUILoader : LoadingExtensionBase
     {
-        UIComponent scaleuicomponent;
+        GameObject go;
+        ScaleUI scaleUIinstance;
 
         public override void OnLevelLoaded (LoadMode mode)
         {
@@ -15,16 +16,16 @@ namespace ScaleUI
             if (mode != LoadMode.LoadGame && mode != LoadMode.NewGame) {
                 return;
             }
-            UIView v = UIView.GetAView ();
-            scaleuicomponent = v.AddUIComponent (typeof(ScaleUIPanel));
+
+            go = new GameObject ("ScaleUI");
+            scaleUIinstance = go.AddComponent<ScaleUI> ();
+            UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (scaleUIinstance.keyhandle);
         }
 
         public override void OnLevelUnloading ()
         {
-            if (scaleuicomponent != null) {
-                GameObject.Destroy (scaleuicomponent.gameObject);
-            }
-            base.OnLevelUnloading ();
+            UIInput.eventProcessKeyEvent -= new UIInput.ProcessKeyEventHandler (scaleUIinstance.keyhandle);
+            GameObject.Destroy (go);
         }
     }
 }

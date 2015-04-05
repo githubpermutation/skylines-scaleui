@@ -58,6 +58,8 @@
     <Compile Include="ScaleUILoader.cs" />
     <Compile Include="ScaleUIPanel.cs" />
     <Compile Include="ScaleUIMod.cs" />
+    <Compile Include="ScaleUI.cs" />
+    <Compile Include="IScaleUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
