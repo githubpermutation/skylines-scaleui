@@ -54,14 +54,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ScaleUI.cs" />
     <Compile Include="ReflectionUtils.cs" />
-    <Compile Include="ScaleUILoader.cs" />
+    <Compile Include="IScaleUI.cs" />
+    <Compile Include="CorralScaleUI.cs" />
+    <Compile Include="ScaleUIMod.cs" />
     <Compile Include="ScaleUIPanel.cs" />
+    <Compile Include="ScaleUILoader.cs" />
+    <Compile Include="ScaleUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="ScaleUI.csproj" />
     <None Include="deldll.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\DecreaseScaleHoveredBG.png" />
+    <EmbeddedResource Include="icons\DecreaseScaleNormalBG.png" />
+    <EmbeddedResource Include="icons\DecreaseScalePressedBG.png" />
+    <EmbeddedResource Include="icons\IncreaseScaleHoveredBG.png" />
+    <EmbeddedResource Include="icons\IncreaseScaleNormalBG.png" />
+    <EmbeddedResource Include="icons\IncreaseScalePressedBG.png" />
   </ItemGroup>
 </Project>
