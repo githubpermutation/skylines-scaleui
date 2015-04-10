@@ -9,7 +9,6 @@ namespace ScaleUI
     {
         float thumbnailbarY = 0f;
         float scalingfactor = 0.05f;
-        String modTag = "[ScaleUI]";
         IScaleUI scaleUIgui;
         GameObject corral;
 
@@ -105,15 +104,19 @@ namespace ScaleUI
         private void fixInfoMenu ()
         {
             //button top left
-            UIComponent uic = UIView.GetAView ().FindUIComponent ("InfoMenu");
-            uic.absolutePosition = new Vector3 (10, 10);
+            UIComponent fullscreenContainer = UIView.GetAView ().FindUIComponent ("FullScreenContainer");
+            UIComponent infomenu = UIView.GetAView ().FindUIComponent ("InfoMenu");
+            infomenu.transformPosition = new Vector2(fullscreenContainer.GetBounds().min.x, fullscreenContainer.GetBounds().max.y);
+            infomenu.relativePosition += new Vector3(20.0f, 20.0f);
         }
         
         private void fixInfoViewsContainer ()
         {
             //container with info buttons
-            UIComponent uic = UIView.GetAView ().FindUIComponent ("InfoViewsContainer");
-            uic.absolutePosition = new Vector3 (0, 58);
+            UIComponent infomenu = UIView.GetAView ().FindUIComponent ("InfoMenu");
+            UIComponent infomenucontainer = UIView.GetAView ().FindUIComponent ("InfoViewsContainer");
+            infomenucontainer.transformPosition = infomenu.GetBounds().min;
+            infomenucontainer.relativePosition += new Vector3(0.0f, 10.0f);
         }
         
         private void fixPoliciesPanel ()
