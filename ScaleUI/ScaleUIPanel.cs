@@ -6,22 +6,18 @@ namespace ScaleUI
 {
     public class ScaleUIPanel : UIPanel, IScaleUI
     {
-
-        public UIButton IncreaseScaleButton {
-            get {
-                return this.increaseScaleButton;
-            }
-        }
-
-        public UIButton DecreaseScaleButton {
-            get {
-                return this.decreaseScaleButton;
-            }
-        }
-
         UIButton increaseScaleButton;
         UIButton decreaseScaleButton;
 
+        public void SetIncreaseScaleCallBack (Action<String> callback)
+        {
+            this.increaseScaleButton.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => callback.Invoke ("");
+        }
+
+        public void SetDecreaseScaleCallBack (Action<String> callback)
+        {
+            this.decreaseScaleButton.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => callback.Invoke ("");
+        }
 
         public ScaleUIPanel ()
         {
@@ -29,11 +25,10 @@ namespace ScaleUI
 
             increaseScaleButton = createButton ();
             increaseScaleButton.text = "+";                     
-            
+
             decreaseScaleButton = createButton ();
             decreaseScaleButton.text = "-";
         }
-
 
         private void InitPanel ()
         {

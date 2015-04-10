@@ -7,14 +7,6 @@ namespace ScaleUI
 {
     public interface IScaleUI
     {
-        UIButton IncreaseScaleButton {
-            get;
-        }
-        
-        UIButton DecreaseScaleButton {
-            get;
-        }
-
         void FixUI();
     }
 

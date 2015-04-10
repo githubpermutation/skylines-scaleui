@@ -11,31 +11,30 @@ namespace ScaleUI
         float scalingfactor = 0.05f;
         String modTag = "[ScaleUI]";
         IScaleUI scaleUIgui;
+        GameObject corral;
 
         void Start ()
         {
             try {
                 InitUI ();
-
-                scaleUIgui.IncreaseScaleButton.eventClick += increaseScale;
-                scaleUIgui.DecreaseScaleButton.eventClick += decreaseScale;
-
-                this.FixUIPositions();
-                            
+                this.FixUIPositions ();
             } catch (Exception ex) {
-                String msg = this.modTag + " Could not initialize, aborting. Exception: " + ex.ToString ();
-                DebugOutputPanel.AddMessage (ColossalFramework.Plugins.PluginManager.MessageType.Error, msg);
-            } finally {
-                UnityEngine.Object.Destroy (this.gameObject);
             }
-
-
         }
 
         void InitUI ()
         {
-            UIView v = UIView.GetAView ();
-            scaleUIgui = (ScaleUIPanel)v.AddUIComponent (typeof(ScaleUIPanel));
+            corral = GameObject.Find ("CorralRegistrationGameObject");
+            if (corral == null) {
+                //use default ui
+                UIView v = UIView.GetAView ();
+
+                scaleUIgui = (ScaleUIPanel)v.AddUIComponent (typeof(ScaleUIPanel));
+                ((ScaleUIPanel)scaleUIgui).SetIncreaseScaleCallBack (increaseScaleCallback);
+                ((ScaleUIPanel)scaleUIgui).SetDecreaseScaleCallBack (decreaseScaleCallback);
+            } else {
+                scaleUIgui = new CorralScaleUI (corral, increaseScaleCallback, decreaseScaleCallback);
+            }
         }
 
         public void keyhandle (EventType eventType, KeyCode keyCode, EventModifiers modifiers)
@@ -45,12 +44,22 @@ namespace ScaleUI
             }
         }
 
+        private void increaseScaleCallback (String name)
+        {
+            increaseScale (null, null);
+        }
+
         private void increaseScale (UIComponent component, UIMouseEventParameter eventParam)
         {
             UIView.GetAView ().scale += scalingfactor;
             FixUIPositions ();
         }
-        
+
+        private void decreaseScaleCallback (String name)
+        {
+            decreaseScale (null, null);
+        }
+
         private void decreaseScale (UIComponent component, UIMouseEventParameter eventParam)
         {
             UIView.GetAView ().scale = Math.Max (UIView.GetAView ().scale - scalingfactor, 1f);
@@ -71,11 +80,9 @@ namespace ScaleUI
                 fixInfoViewsContainer ();
                 fixPoliciesPanel ();
                 fixUnlockingPanel ();
-                
+
                 scaleUIgui.FixUI ();
             } catch (Exception ex) {
-                String msg = modTag + " Could not move UI elements. Exception: " + ex.ToString ();
-                DebugOutputPanel.AddMessage (ColossalFramework.Plugins.PluginManager.MessageType.Error, msg);
             }
         }
         
