@@ -12,11 +12,16 @@ namespace ScaleUI
         IScaleUI scaleUIgui;
         GameObject corral;
 
+        void OnDestroy ()
+        {
+            scaleUIgui.Destroy ();
+        }
+
         void Start ()
         {
             try {
                 InitUI ();
-                this.FixUIPositions ();
+                FixEverything ();
             } catch (Exception ex) {
             }
         }
@@ -51,7 +56,7 @@ namespace ScaleUI
         private void increaseScale (UIComponent component, UIMouseEventParameter eventParam)
         {
             UIView.GetAView ().scale += scalingfactor;
-            FixUIPositions ();
+            FixEverything ();
         }
 
         private void decreaseScaleCallback (String name)
@@ -61,16 +66,58 @@ namespace ScaleUI
 
         private void decreaseScale (UIComponent component, UIMouseEventParameter eventParam)
         {
-            UIView.GetAView ().scale = Math.Max (UIView.GetAView ().scale - scalingfactor, 1f);
-            FixUIPositions ();
+            UIView.GetAView ().scale = Math.Max (UIView.GetAView ().scale - scalingfactor, 0.1f);
+            FixEverything ();
         }
         
         private void SetDefaultScale ()
         {
             UIView.GetAView ().scale = 1f;
+            FixEverything ();
+        }
+
+        private void FixEverything ()
+        {
+            FixCamera ();
             FixUIPositions ();
         }
-        
+
+        private void FixCamera ()
+        {
+            if (UIView.GetAView ().scale < 1.0f) {
+                if (cameraIsFullscreen ()) {
+                    return;
+                }
+                MakeCameraFullscreen.Initialize ();
+            } else {
+                //scaleui redirected camera
+                if (MakeCameraFullscreen.cameraControllerRedirected) {
+                    MakeCameraFullscreen.Deinitialize ();
+                }
+            }
+        }
+
+        private bool cameraIsFullscreen ()
+        {
+            if (MakeCameraFullscreen.cameraControllerRedirected) {
+                return true;
+            }
+            CameraController cameraController = GameObject.FindObjectOfType<CameraController> ();
+            if (cameraController != null) {
+            
+                Camera camera = cameraController.GetComponent<Camera> ();
+                if (camera != null) {
+            
+                    if (Mathf.Approximately (camera.rect.width, 1) && Mathf.Approximately (camera.rect.height, 1)) {
+                        //already fullscreen
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+
         private void FixUIPositions ()
         {           
             try {
@@ -106,8 +153,9 @@ namespace ScaleUI
             //button top left
             UIComponent fullscreenContainer = UIView.GetAView ().FindUIComponent ("FullScreenContainer");
             UIComponent infomenu = UIView.GetAView ().FindUIComponent ("InfoMenu");
-            infomenu.transformPosition = new Vector2(fullscreenContainer.GetBounds().min.x, fullscreenContainer.GetBounds().max.y);
-            infomenu.relativePosition += new Vector3(20.0f, 20.0f);
+
+            infomenu.AlignTo (fullscreenContainer, UIAlignAnchor.TopLeft);
+            infomenu.relativePosition += new Vector3 (20.0f, 15.0f);
         }
         
         private void fixInfoViewsContainer ()
@@ -115,8 +163,10 @@ namespace ScaleUI
             //container with info buttons
             UIComponent infomenu = UIView.GetAView ().FindUIComponent ("InfoMenu");
             UIComponent infomenucontainer = UIView.GetAView ().FindUIComponent ("InfoViewsContainer");
-            infomenucontainer.transformPosition = infomenu.GetBounds().min;
-            infomenucontainer.relativePosition += new Vector3(0.0f, 10.0f);
+
+            infomenucontainer.pivot = UIPivotPoint.TopCenter;
+            infomenucontainer.transformPosition = new Vector3 (infomenu.GetBounds ().center.x, infomenu.GetBounds ().min.y);
+            infomenucontainer.relativePosition += new Vector3 (0.0f, 5.0f);
         }
         
         private void fixPoliciesPanel ()
