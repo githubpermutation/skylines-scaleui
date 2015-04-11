@@ -19,6 +19,10 @@ namespace ScaleUI
             this.decreaseScaleButton.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => callback.Invoke ("");
         }
 
+        public void Destroy ()
+        {
+            this.enabled = false;
+        }
         public ScaleUIPanel ()
         {
             InitPanel ();

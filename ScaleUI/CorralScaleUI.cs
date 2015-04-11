@@ -7,15 +7,8 @@ namespace ScaleUI
 {
     public class CorralScaleUI : MonoBehaviour, IScaleUI
     {
+
         public void FixUI ()
-        {
-        }
-
-        public void SetIncreaseScaleCallBack (Action<String> callback)
-        {
-        }
-
-        public void SetDecreaseScaleCallBack (Action<String> callback)
         {
         }
 
@@ -29,7 +22,7 @@ namespace ScaleUI
             createButton ("DecreaseScale", "Decrease UI scale", decreaseScale, "DecreaseScale");
         }
 
-        void OnDestroy ()
+        public void Destroy ()
         {
             destroyButton ("IncreaseScale");
             destroyButton ("DecreaseScale");
