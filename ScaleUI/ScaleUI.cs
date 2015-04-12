@@ -21,8 +21,13 @@ namespace ScaleUI
         {
             try {
                 InitUI ();
+            } catch (Exception ex) {
+                DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, "ScaleUI: "+ex.ToString());
+            }
+            try {
                 FixEverything ();
             } catch (Exception ex) {
+                DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, "ScaleUI: "+ex.ToString());
             }
         }
 
