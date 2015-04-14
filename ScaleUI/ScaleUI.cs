@@ -159,8 +159,8 @@ namespace ScaleUI
             UIComponent fullscreenContainer = UIView.GetAView ().FindUIComponent ("FullScreenContainer");
             UIComponent infomenu = UIView.GetAView ().FindUIComponent ("InfoMenu");
 
-            infomenu.AlignTo (fullscreenContainer, UIAlignAnchor.TopLeft);
-            infomenu.relativePosition += new Vector3 (20.0f, 15.0f);
+            infomenu.transformPosition = new Vector2(fullscreenContainer.GetBounds().min.x, fullscreenContainer.GetBounds().max.y);
+            infomenu.relativePosition += new Vector3 (20.0f, 20.0f);
         }
         
         private void fixInfoViewsContainer ()
