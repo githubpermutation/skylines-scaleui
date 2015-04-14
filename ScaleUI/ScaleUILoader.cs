@@ -17,15 +17,27 @@ namespace ScaleUI
                 return;
             }
 
-            go = new GameObject ("ScaleUI");
-            scaleUIinstance = go.AddComponent<ScaleUI> ();
-            UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (scaleUIinstance.keyhandle);
+            go = GameObject.Find("ScaleUI");
+            if(go == null) {
+                go = new GameObject ("ScaleUI");
+                scaleUIinstance = go.AddComponent<ScaleUI> ();
+            }
+
+            try {
+                UIInput.eventProcessKeyEvent += new UIInput.ProcessKeyEventHandler (scaleUIinstance.keyhandle);
+            } catch (Exception ex) {
+                ex.ToString();
+            }
         }
 
         public override void OnLevelUnloading ()
         {
-            UIInput.eventProcessKeyEvent -= new UIInput.ProcessKeyEventHandler (scaleUIinstance.keyhandle);
-            GameObject.Destroy (go);
+            try {
+                UIInput.eventProcessKeyEvent -= new UIInput.ProcessKeyEventHandler (scaleUIinstance.keyhandle);
+                GameObject.Destroy (go);
+            } catch (Exception ex) {
+                ex.ToString();
+            }
         }
     }
 }
